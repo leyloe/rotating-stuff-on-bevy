@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 bevy = { version = "0.14.2", features = ["dynamic_linking"] }
+bevy-inspector-egui = "0.25.2"
 bevy_rapier2d = { version = "*", features = ["simd-stable", "debug-render-2d"] }
 
 [profile.dev]
