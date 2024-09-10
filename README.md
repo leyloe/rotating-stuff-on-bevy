@@ -1,7 +1,7 @@
 scale the dog - / +\
 rotate the dogs x axis O / P\
 rotate the dogs y axis K / L\
-rotate the dogs z axis [ / ]\
+rotate the dogs z axis [ / ]
 move the dog WASD/Arrows\
 
 ![image](https://github.com/user-attachments/assets/79efe457-cdc0-495d-98e2-3591daf8372c)
