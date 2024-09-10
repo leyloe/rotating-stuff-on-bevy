@@ -5,20 +5,10 @@ use crate::{
     constants::{PLAYER_MOVEMENT_SPEED, PLAYER_ROTATION_SPEED, PLAYER_SCALE_SPEED},
 };
 
-pub fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn((
-        SpriteBundle {
-            texture: asset_server.load("sprites/image.png"),
-            ..default()
-        },
-        Player,
-    ));
-}
-
 pub fn move_player(
-    keyboard_input: &Res<ButtonInput<KeyCode>>,
-    query: &mut Query<&mut Transform, With<Player>>,
-    time: &Res<Time>,
+    keyboard_input: Res<ButtonInput<KeyCode>>,
+    mut query: Query<&mut Transform, With<Player>>,
+    time: Res<Time>,
 ) {
     let mut player_transform = query.single_mut();
     let mut x_direction = 0.0;
@@ -47,9 +37,9 @@ pub fn move_player(
 }
 
 pub fn scale_player(
-    keyboard_input: &Res<ButtonInput<KeyCode>>,
-    query: &mut Query<&mut Transform, With<Player>>,
-    time: &Res<Time>,
+    keyboard_input: Res<ButtonInput<KeyCode>>,
+    mut query: Query<&mut Transform, With<Player>>,
+    time: Res<Time>,
 ) {
     let mut player_transform = query.single_mut();
 
@@ -74,14 +64,34 @@ pub fn rotate_player(
 ) {
     let mut player_transform = query.single_mut();
 
-    let mut rotate = 0.0;
+    let mut rotate_x = 0.0;
+
+    if keyboard_input.pressed(KeyCode::KeyP) {
+        rotate_x -= 1.0;
+    }
+    if keyboard_input.pressed(KeyCode::KeyO) {
+        rotate_x += 1.0;
+    }
+
+    let mut rotate_y = 0.0;
+
+    if keyboard_input.pressed(KeyCode::KeyL) {
+        rotate_y -= 1.0;
+    }
+    if keyboard_input.pressed(KeyCode::KeyK) {
+        rotate_y += 1.0;
+    }
+
+    let mut rotate_z = 0.0;
 
     if keyboard_input.pressed(KeyCode::BracketRight) {
-        rotate -= 1.0;
+        rotate_z -= 1.0;
     }
     if keyboard_input.pressed(KeyCode::BracketLeft) {
-        rotate += 1.0;
+        rotate_z += 1.0;
     }
 
-    player_transform.rotate_z(rotate * PLAYER_ROTATION_SPEED * time.delta_seconds());
+    player_transform.rotate_x(rotate_x * PLAYER_ROTATION_SPEED * time.delta_seconds());
+    player_transform.rotate_y(rotate_y * PLAYER_ROTATION_SPEED * time.delta_seconds());
+    player_transform.rotate_z(rotate_z * PLAYER_ROTATION_SPEED * time.delta_seconds());
 }
